@@ -1,7 +1,41 @@
 #ifndef __CLIENT_H_
 #define __CLIENT_H_
 
-#include <cstdint>
+#include <string_view>
+#include <tuple>
+
+namespace http {
+    namespace client
+    {
+        const unsigned int HTTP_PORT = 80;
+        const unsigned int HTTPS_PORT = 443;
+
+        class HttpConnection final {
+        private:
+            static const unsigned int http_version {11};
+            //static constexpr std::string http_version_str = "";
+            static const int default_port = HTTP_PORT;
+
+            std::string_view host;
+
+        public:
+            HttpConnection(std::string_view host, unsigned int port = 0)
+                : host{host} {
+                auto host_port {get_hostport()};
+            }
+
+        private:
+            std::tuple<std::string, unsigned int> get_hostport() const {
+                auto host_len {host.length()};
+                if (host != "" && host[0] == '[' && host[host_len - 1] == ']') {
+                }
+            }
+        };
+    }
+}
+
+
+/*#include <cstdint>
 #include <map>
 #include <memory>
 #include <string>
@@ -55,6 +89,6 @@ namespace http {
             return nullptr;
         }
     };
-}
+}*/
 
 #endif
